@@ -8,10 +8,13 @@
 #include <unistd.h>
 #include <cstring>
 
-class UdpLoopbackNode : public rclcpp::Node
-{
-public:
-    UdpLoopbackNode() : Node("udp_loopback_node")
+#include "udp_loopback_node.hpp"
+
+//class UdpLoopbackNode : public rclcpp::Node
+//{
+//public:
+ //   UdpLoopbackNode() : Node("udp_loopback_node")
+UdpLoopbackNode::UdpLoopbackNode() : Node("udp_loopback_node")
     {
         // UDP受信ポートの設定
         sockfd_ = socket(AF_INET, SOCK_DGRAM, 0);
@@ -42,13 +45,13 @@ public:
         );
     }
 
-    ~UdpLoopbackNode()
+UdpLoopbackNode::~UdpLoopbackNode()
     {
         if (sockfd_ >= 0) close(sockfd_);
     }
 
-private:
-    void check_udp()
+//private:
+    void UdpLoopbackNode::check_udp()
     {
         uint8_t buf[4];
         sockaddr_in sender_addr;
@@ -75,4 +78,4 @@ private:
     int sockfd_;
     rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr publisher_;
     rclcpp::TimerBase::SharedPtr timer_;
-};
+
