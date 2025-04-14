@@ -33,6 +33,8 @@ UdpLoopbackNode::UdpLoopbackNode() : Node("udp_loopback_node")
             return;
         }
 
+				RCLCPP_INFO(this->get_logger(), "UDP socket bound to port %d", 5005);
+
         fcntl(sockfd_, F_SETFL, O_NONBLOCK);  // 非ブロッキング受信
 
         // Publisher（ROS 2トピックへの送信）
@@ -59,6 +61,8 @@ UdpLoopbackNode::~UdpLoopbackNode()
 
         int len = recvfrom(sockfd_, buf, sizeof(buf), 0,
                            (struct sockaddr*)&sender_addr, &addrlen);
+
+				RCLCPP_INFO(this->get_logger(), "recvfrom() returned: %d", len);
 
         if (len == 4) {
             float value;
